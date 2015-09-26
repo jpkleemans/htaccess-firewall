@@ -8,13 +8,18 @@ namespace HtaccessFirewall\Filesystem;
 class BuiltInFilesystem implements FileSystem
 {
     /**
+     * @var bool
+     */
+    private $writeLock;
+
+    /**
      * Initialize BuiltInFilesystem.
      *
      * @param bool $writeLock whether to use a write lock (LOCK_EX).
      */
     public function __construct($writeLock = true)
     {
-        // TODO: write logic here
+        $this->writeLock = $writeLock;
     }
 
     /**
@@ -26,7 +31,7 @@ class BuiltInFilesystem implements FileSystem
      */
     public function read($file)
     {
-        // TODO: Implement read() method.
+        return file($file, FILE_IGNORE_NEW_LINES);
     }
 
     /**
@@ -37,7 +42,8 @@ class BuiltInFilesystem implements FileSystem
      */
     public function write($file, $lines)
     {
-        // TODO: Implement write() method.
+        $contents = implode(PHP_EOL, $lines);
+        file_put_contents($file, $contents, $this->writeLock ? LOCK_EX : 0);
     }
 
     /**
@@ -49,7 +55,7 @@ class BuiltInFilesystem implements FileSystem
      */
     public function exists($file)
     {
-        // TODO: Implement exists() method.
+        return file_exists($file);
     }
 
     /**
@@ -61,7 +67,7 @@ class BuiltInFilesystem implements FileSystem
      */
     public function readable($file)
     {
-        // TODO: Implement readable() method.
+        return is_readable($file);
     }
 
     /**
@@ -73,6 +79,6 @@ class BuiltInFilesystem implements FileSystem
      */
     public function writable($file)
     {
-        // TODO: Implement writable() method.
+        return is_writable($file);
     }
 }
