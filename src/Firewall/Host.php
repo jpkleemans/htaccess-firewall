@@ -43,6 +43,16 @@ class Host
     }
 
     /**
+     * Create Host from string.
+     *
+     * @return Host
+     */
+    public static function fromCurrentRequest()
+    {
+        return new self($_SERVER['REMOTE_ADDR']);
+    }
+
+    /**
      * Get string representation of Host.
      *
      * @return string

@@ -21,6 +21,10 @@ class HtaccessFirewallSpec extends ObjectBehavior
                 '# END Firewall'
             ]);
 
+        $fileSystem->exists('path/to/.htaccess')->willReturn(true);
+        $fileSystem->readable('path/to/.htaccess')->willReturn(true);
+        $fileSystem->writable('path/to/.htaccess')->willReturn(true);
+
         $this->beConstructedWith('path/to/.htaccess', $fileSystem);
     }
 
@@ -28,6 +32,10 @@ class HtaccessFirewallSpec extends ObjectBehavior
     {
         $this->shouldHaveType('HtaccessFirewall\Firewall\HtaccessFirewall');
         $this->shouldImplement('HtaccessFirewall\Firewall\Firewall');
+
+        $this->shouldNotThrow('HtaccessFirewall\Firewall\Exception\FileNotFoundException')->duringInstantiation();
+        $this->shouldNotThrow('HtaccessFirewall\Firewall\Exception\FileNotReadableException')->duringInstantiation();
+        $this->shouldNotThrow('HtaccessFirewall\Firewall\Exception\FileNotWritableException')->duringInstantiation();
     }
 
     function it_blocks_a_host($fileSystem)
@@ -72,6 +80,22 @@ class HtaccessFirewallSpec extends ObjectBehavior
         ])->shouldBeCalled();
 
         $this->block(Host::fromString('123.0.0.1'));
+    }
+
+    function it_does_not_block_when_end_marker_is_not_found($fileSystem)
+    {
+        $fileSystem->read('path/to/.htaccess')
+            ->willReturn([
+                '# BEGIN Firewall',
+                'order allow,deny',
+                'deny from 123.0.0.1',
+                'deny from 123.0.0.2',
+                'allow from all',
+                //'# END Firewall'
+            ]);
+
+        $this->shouldThrow('HtaccessFirewall\Firewall\Exception\FileException')
+            ->during('block', [Host::fromString('123.0.0.1')]);
     }
 
     function it_unblocks_a_host($fileSystem)

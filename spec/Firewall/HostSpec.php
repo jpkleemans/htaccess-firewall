@@ -52,6 +52,12 @@ class HostSpec extends ObjectBehavior
         $this->toString()->shouldBe('123.0.0.1');
     }
 
+    function it_is_initializable_from_the_current_request()
+    {
+        $this->beConstructedThrough('fromCurrentRequest', []);
+        $this->shouldNotThrow('HtaccessFirewall\Firewall\Exception\InvalidArgumentException')->duringInstantiation();
+    }
+
     function it_compares_equality_with_another_host()
     {
         $host1 = $this::fromString('123.0.0.1');

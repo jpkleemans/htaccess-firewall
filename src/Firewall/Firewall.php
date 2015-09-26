@@ -5,14 +5,14 @@ namespace HtaccessFirewall\Firewall;
 interface Firewall
 {
     /**
-     * Block a host.
+     * Block host.
      *
      * @param Host $host
      */
     public function block(Host $host);
 
     /**
-     * Unblock a host.
+     * Unblock host.
      *
      * @param Host $host
      */
