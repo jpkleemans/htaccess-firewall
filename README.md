@@ -9,7 +9,7 @@ Simple access control using Htaccess.
 Via Composer
 
 ``` bash
-$ composer require jpkleemans/htaccess-firewall
+$ composer require jpkleemans/htaccess-firewall:dev-master
 ```
 
 ## Usage
