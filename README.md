@@ -14,7 +14,7 @@ $ composer require jpkleemans/htaccess-firewall
 
 ## Usage
 
-First, create an instance of the HtaccessFirewall class:
+First, create an instance of the `HtaccessFirewall` class:
 
 ``` php
 use HtaccessFirewall\Firewall;
@@ -46,7 +46,7 @@ $host = Host::fromCurrentRequest();
 $firewall->block($host);
 ```
 
-More coming soon...
+> More coming soon...
 
 ## Testing
 
