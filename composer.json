@@ -1,0 +1,36 @@
+{
+    "name": "jpkleemans/htaccess-firewall",
+    "description": "Simple access control using Htaccess",
+    "keywords": [
+        "htaccess",
+        "firewall",
+        "access",
+        "block",
+        "deny",
+        "blacklist"
+    ],
+    "homepage": "https://github.com/jpkleemans/htaccess-firewall",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jan-Paul Kleemans",
+            "email": "jpkleemans@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.3",
+        "mikey179/vfsStream": "~1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "HtaccessFirewall\\": "src"
+        }
+    },
+    "scripts": {
+        "test": "phpspec run"
+    }
+}
