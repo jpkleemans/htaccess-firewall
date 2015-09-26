@@ -1,0 +1,4 @@
+suites:
+    htaccess_firewall:
+        namespace: HtaccessFirewall
+        psr4_prefix: HtaccessFirewall
