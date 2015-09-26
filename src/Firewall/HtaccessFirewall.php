@@ -2,6 +2,7 @@
 
 namespace HtaccessFirewall\Firewall;
 
+use HtaccessFirewall\Filesystem\BuiltInFilesystem;
 use HtaccessFirewall\Filesystem\Filesystem;
 use HtaccessFirewall\Firewall\Exception\FileException;
 use HtaccessFirewall\Firewall\Exception\FileNotFoundException;
@@ -40,18 +41,19 @@ class HtaccessFirewall implements Firewall
      */
     public function __construct($path, Filesystem $fileSystem = null)
     {
-        if (!$fileSystem->exists($path)) {
+        $this->fileSystem = $fileSystem ?: new BuiltInFilesystem();
+
+        if (!$this->fileSystem->exists($path)) {
             throw new FileNotFoundException('Htaccess file not found.');
         }
-        if (!$fileSystem->readable($path)) {
+        if (!$this->fileSystem->readable($path)) {
             throw new FileNotReadableException('Htaccess file not readable.');
         }
-        if (!$fileSystem->writable($path)) {
+        if (!$this->fileSystem->writable($path)) {
             throw new FileNotWritableException('Htaccess file not writable.');
         }
 
         $this->path = $path;
-        $this->fileSystem = $fileSystem;
     }
 
     /**
