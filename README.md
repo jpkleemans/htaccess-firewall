@@ -1,4 +1,4 @@
-# htaccess-firewall
+# Htaccess Firewall
 
 [![Build Status](https://img.shields.io/travis/jpkleemans/htaccess-firewall.svg)](https://travis-ci.org/jpkleemans/htaccess-firewall)
 [![Code Quality](https://img.shields.io/scrutinizer/g/jpkleemans/htaccess-firewall.svg)](https://scrutinizer-ci.com/g/jpkleemans/htaccess-firewall/)
