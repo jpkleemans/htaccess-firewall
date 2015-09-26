@@ -1,6 +1,7 @@
 # htaccess-firewall
 
 [![Build Status](https://travis-ci.org/jpkleemans/htaccess-firewall.svg?branch=master)](https://travis-ci.org/jpkleemans/htaccess-firewall)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
 
 Simple access control using Htaccess.
 
