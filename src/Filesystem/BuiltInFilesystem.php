@@ -5,7 +5,7 @@ namespace HtaccessFirewall\Filesystem;
 /**
  * Filesystem using PHP's built-in filesystem functions.
  */
-class BuiltInFilesystem implements FileSystem
+class BuiltInFilesystem implements Filesystem
 {
     /**
      * @var bool
