@@ -6,6 +6,8 @@
 
 Simple access control using Htaccess.
 
+> This library is currently under development. Things will change!
+
 ## Install
 
 Via Composer
