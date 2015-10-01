@@ -239,7 +239,7 @@ class HtaccessFirewall implements Firewall
      */
     private function isBeginOfSection($line)
     {
-        return strpos($line, '# BEGIN ' . self::$sectionLabel) !== false;
+        return strpos($line, '# BEGIN ' . self::$sectionLabel) === 0;
     }
 
     /**
@@ -251,6 +251,6 @@ class HtaccessFirewall implements Firewall
      */
     private function isEndOfSection($line)
     {
-        return strpos($line, '# END ' . self::$sectionLabel) !== false;
+        return strpos($line, '# END ' . self::$sectionLabel) === 0;
     }
 }
