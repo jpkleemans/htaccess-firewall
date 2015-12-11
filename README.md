@@ -21,8 +21,6 @@ $ composer require jpkleemans/htaccess-firewall:dev-master
 First, create an instance of the `HtaccessFirewall` class:
 
 ``` php
-use HtaccessFirewall\Firewall;
-
 $firewall = new HtaccessFirewall('path/to/.htaccess');
 ```
 
@@ -31,7 +29,7 @@ $firewall = new HtaccessFirewall('path/to/.htaccess');
 ``` php
 $host = IP::fromString('123.0.0.1');
 
-$firewall->block($host);
+$firewall->deny($host);
 ```
 
 ### Unblock IP
@@ -39,7 +37,7 @@ $firewall->block($host);
 ``` php
 $host = IP::fromString('123.0.0.1');
 
-$firewall->unblock($host);
+$firewall->undeny($host);
 ```
 
 ### Block current visitor
@@ -47,7 +45,7 @@ $firewall->unblock($host);
 ``` php
 $host = IP::fromCurrentRequest();
 
-$firewall->block($host);
+$firewall->deny($host);
 ```
 
 > More coming soon...
