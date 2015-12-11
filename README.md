@@ -26,18 +26,18 @@ use HtaccessFirewall\Firewall;
 $firewall = new HtaccessFirewall('path/to/.htaccess');
 ```
 
-### Block host
+### Block IP
 
 ``` php
-$host = Host::fromString('123.0.0.1');
+$host = IP::fromString('123.0.0.1');
 
 $firewall->block($host);
 ```
 
-### Unblock host
+### Unblock IP
 
 ``` php
-$host = Host::fromString('123.0.0.1');
+$host = IP::fromString('123.0.0.1');
 
 $firewall->unblock($host);
 ```
@@ -45,7 +45,7 @@ $firewall->unblock($host);
 ### Block current visitor
 
 ``` php
-$host = Host::fromCurrentRequest();
+$host = IP::fromCurrentRequest();
 
 $firewall->block($host);
 ```
