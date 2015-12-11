@@ -36,6 +36,25 @@ class BuiltInFilesystemSpec extends ObjectBehavior
         $result->shouldContain('Dolor sit amet');
     }
 
+    function it_cannot_read_a_non_existent_file()
+    {
+        $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'doesntexist.txt';
+
+        $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileNotFoundException')
+            ->during('read', [$file]);
+    }
+
+    function it_cannot_read_a_non_readable_file()
+    {
+        $root = vfsStreamWrapper::getRoot();
+        vfsStream::newFile('not_readable.txt', 0111)->at($root);
+
+        $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'not_readable.txt';
+
+        $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileNotReadableException')
+            ->during('read', [$file]);
+    }
+
     function it_writes_an_array_to_a_file()
     {
         $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'dummyfile.txt';
@@ -51,6 +70,25 @@ class BuiltInFilesystemSpec extends ObjectBehavior
         $result->shouldHaveCount(2);
         $result->shouldContain('Integer consequat');
         $result->shouldNotContain('Dolor sit amet');
+    }
+
+    function it_cannot_write_to_a_non_existent_file()
+    {
+        $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'doesntexist.txt';
+
+        $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileNotFoundException')
+            ->during('write', [$file, ['Lorem ipsum']]);
+    }
+
+    function it_cannot_write_to_a_non_writable_file()
+    {
+        $root = vfsStreamWrapper::getRoot();
+        vfsStream::newFile('not_writable.txt', 0444)->at($root);
+
+        $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'not_writable.txt';
+
+        $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileNotWritableException')
+            ->during('write', [$file, ['Lorem ipsum']]);
     }
 
     function it_checks_whether_a_file_exists()

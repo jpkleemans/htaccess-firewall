@@ -2,6 +2,10 @@
 
 namespace HtaccessFirewall\Filesystem;
 
+use HtaccessFirewall\Filesystem\Exception\FileNotFoundException;
+use HtaccessFirewall\Filesystem\Exception\FileNotReadableException;
+use HtaccessFirewall\Filesystem\Exception\FileNotWritableException;
+
 /**
  * Filesystem using PHP's built-in filesystem functions.
  */
@@ -27,10 +31,21 @@ class BuiltInFilesystem implements Filesystem
      *
      * @param string $file Path to the file.
      *
+     * @throws FileNotFoundException
+     * @throws FileNotReadableException
+     *
      * @return array
      */
     public function read($file)
     {
+        if (!$this->exists($file)) {
+            throw new FileNotFoundException;
+        }
+
+        if (!$this->readable($file)) {
+            throw new FileNotReadableException;
+        }
+
         return file($file, FILE_IGNORE_NEW_LINES);
     }
 
@@ -38,10 +53,22 @@ class BuiltInFilesystem implements Filesystem
      * Write an array to a file.
      *
      * @param string $file Path to the file.
+     *
+     * @throws FileNotFoundException
+     * @throws FileNotWritableException
+     *
      * @param array $lines Array of lines to write to the file.
      */
     public function write($file, $lines)
     {
+        if (!$this->exists($file)) {
+            throw new FileNotFoundException;
+        }
+
+        if (!$this->writable($file)) {
+            throw new FileNotWritableException;
+        }
+
         $contents = implode(PHP_EOL, $lines);
         file_put_contents($file, $contents, $this->writeLock ? LOCK_EX : 0);
     }

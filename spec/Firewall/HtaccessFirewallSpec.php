@@ -32,10 +32,6 @@ class HtaccessFirewallSpec extends ObjectBehavior
     {
         $this->shouldHaveType('HtaccessFirewall\Firewall\HtaccessFirewall');
         $this->shouldImplement('HtaccessFirewall\Firewall\Firewall');
-
-        $this->shouldNotThrow('HtaccessFirewall\Firewall\Exception\FileNotFoundException')->duringInstantiation();
-        $this->shouldNotThrow('HtaccessFirewall\Firewall\Exception\FileNotReadableException')->duringInstantiation();
-        $this->shouldNotThrow('HtaccessFirewall\Firewall\Exception\FileNotWritableException')->duringInstantiation();
     }
 
     function it_blocks_a_host($fileSystem)
@@ -94,7 +90,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
                 //'# END Firewall'
             ]);
 
-        $this->shouldThrow('HtaccessFirewall\Firewall\Exception\FileException')
+        $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileException')
             ->during('block', [Host::fromString('123.0.0.1')]);
     }
 

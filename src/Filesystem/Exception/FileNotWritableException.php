@@ -1,6 +1,6 @@
 <?php
 
-namespace HtaccessFirewall\Firewall\Exception;
+namespace HtaccessFirewall\Filesystem\Exception;
 
 class FileNotWritableException extends FileException
 {
