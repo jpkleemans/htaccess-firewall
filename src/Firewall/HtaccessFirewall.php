@@ -85,10 +85,10 @@ class HtaccessFirewall implements Firewall
     private function addLine($line)
     {
         $insertion = array_merge(
-            ['order allow,deny'],
+            array('order allow,deny'),
             $this->readLinesWithPrefix('deny from '),
-            [$line],
-            ['allow from all']
+            array($line),
+            array('allow from all')
         );
 
         $this->writeLines(array_unique($insertion));
@@ -123,12 +123,12 @@ class HtaccessFirewall implements Firewall
     private function readLinesWithPrefix($prefixes)
     {
         if (!is_array($prefixes)) {
-            $prefixes = [$prefixes];
+            $prefixes = array($prefixes);
         }
 
         $lines = $this->readLines();
 
-        $prefixedLines = [];
+        $prefixedLines = array();
         foreach ($lines as $line) {
             foreach ($prefixes as $prefix) {
                 if (strpos($line, $prefix) === 0) {
@@ -149,7 +149,7 @@ class HtaccessFirewall implements Firewall
     {
         $lines = $this->fileSystem->read($this->path);
 
-        $linesInSection = [];
+        $linesInSection = array();
         $inSection = false;
         foreach ($lines as $line) {
             if ($this->isEndOfSection($line)) {
@@ -175,7 +175,7 @@ class HtaccessFirewall implements Firewall
     {
         $oldLines = $this->fileSystem->read($this->path);
 
-        $newLines = [];
+        $newLines = array();
         $sectionExists = false;
         $inSection = false;
         foreach ($oldLines as $oldLine) {
@@ -188,9 +188,9 @@ class HtaccessFirewall implements Firewall
             if ($this->isEndOfSection($oldLine)) {
                 $newLines = array_merge(
                     $newLines,
-                    ['# BEGIN ' . self::$sectionLabel],
+                    array('# BEGIN ' . self::$sectionLabel),
                     $lines,
-                    ['# END ' . self::$sectionLabel]
+                    array('# END ' . self::$sectionLabel)
                 );
 
                 $sectionExists = true;
@@ -205,9 +205,9 @@ class HtaccessFirewall implements Firewall
         if (!$sectionExists) {
             $newLines = array_merge(
                 $oldLines,
-                ['# BEGIN ' . self::$sectionLabel],
+                array('# BEGIN ' . self::$sectionLabel),
                 $lines,
-                ['# END ' . self::$sectionLabel]
+                array('# END ' . self::$sectionLabel)
             );
         }
 
