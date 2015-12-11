@@ -11,9 +11,9 @@ class BuiltInFilesystemSpec extends ObjectBehavior
 {
     function let()
     {
-        vfsStream::setup('root', null, [
+        vfsStream::setup('root', null, array(
             'dummyfile.txt' => 'Lorem ipsum' . PHP_EOL . 'Dolor sit amet' . PHP_EOL . 'consectetur adipiscing elit'
-        ]);
+        ));
 
         // Disable write lock because LOCK_EX does not work with vfsStream
         $this->beConstructedWith(false);
@@ -41,7 +41,7 @@ class BuiltInFilesystemSpec extends ObjectBehavior
         $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'doesntexist.txt';
 
         $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileNotFoundException')
-            ->during('read', [$file]);
+            ->during('read', array($file));
     }
 
     function it_cannot_read_a_non_readable_file()
@@ -52,17 +52,17 @@ class BuiltInFilesystemSpec extends ObjectBehavior
         $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'not_readable.txt';
 
         $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileNotReadableException')
-            ->during('read', [$file]);
+            ->during('read', array($file));
     }
 
     function it_writes_an_array_to_a_file()
     {
         $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'dummyfile.txt';
 
-        $this->write($file, [
+        $this->write($file, array(
             'Integer consequat',
             'accumsan orci'
-        ]);
+        ));
 
         $result = $this->read($file);
 
@@ -77,7 +77,7 @@ class BuiltInFilesystemSpec extends ObjectBehavior
         $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'doesntexist.txt';
 
         $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileNotFoundException')
-            ->during('write', [$file, ['Lorem ipsum']]);
+            ->during('write', array($file, array('Lorem ipsum')));
     }
 
     function it_cannot_write_to_a_non_writable_file()
@@ -88,7 +88,7 @@ class BuiltInFilesystemSpec extends ObjectBehavior
         $file = vfsStream::url('root') . DIRECTORY_SEPARATOR . 'not_writable.txt';
 
         $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileNotWritableException')
-            ->during('write', [$file, ['Lorem ipsum']]);
+            ->during('write', array($file, array('Lorem ipsum')));
     }
 
     function it_checks_whether_a_file_exists()
