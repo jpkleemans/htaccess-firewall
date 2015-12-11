@@ -5,7 +5,7 @@ namespace spec\HtaccessFirewall\Firewall;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use HtaccessFirewall\Filesystem\Filesystem;
-use HtaccessFirewall\Firewall\Host;
+use HtaccessFirewall\Host\IP;
 
 class HtaccessFirewallSpec extends ObjectBehavior
 {
@@ -20,10 +20,6 @@ class HtaccessFirewallSpec extends ObjectBehavior
                 'allow from all',
                 '# END Firewall'
             ]);
-
-        $fileSystem->exists('path/to/.htaccess')->willReturn(true);
-        $fileSystem->readable('path/to/.htaccess')->willReturn(true);
-        $fileSystem->writable('path/to/.htaccess')->willReturn(true);
 
         $this->beConstructedWith('path/to/.htaccess', $fileSystem);
     }
@@ -46,7 +42,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             '# END Firewall'
         ])->shouldBeCalled();
 
-        $this->block(Host::fromString('123.0.0.3'));
+        $this->deny(IP::fromString('123.0.0.3'));
     }
 
     function it_does_not_block_an_already_blocked_host($fileSystem)
@@ -60,7 +56,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             '# END Firewall'
         ])->shouldBeCalled();
 
-        $this->block(Host::fromString('123.0.0.1'));
+        $this->deny(IP::fromString('123.0.0.1'));
     }
 
     function it_blocks_a_host_for_the_first_time($fileSystem)
@@ -75,7 +71,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             '# END Firewall'
         ])->shouldBeCalled();
 
-        $this->block(Host::fromString('123.0.0.1'));
+        $this->deny(IP::fromString('123.0.0.1'));
     }
 
     function it_does_not_block_when_end_marker_is_not_found($fileSystem)
@@ -91,7 +87,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             ]);
 
         $this->shouldThrow('HtaccessFirewall\Filesystem\Exception\FileException')
-            ->during('block', [Host::fromString('123.0.0.1')]);
+            ->during('deny', [IP::fromString('123.0.0.1')]);
     }
 
     function it_unblocks_a_host($fileSystem)
@@ -104,29 +100,15 @@ class HtaccessFirewallSpec extends ObjectBehavior
             '# END Firewall'
         ])->shouldBeCalled();
 
-        $this->unblock(Host::fromString('123.0.0.1'));
+        $this->undeny(IP::fromString('123.0.0.1'));
     }
 
     function it_gets_all_blocked_hosts()
     {
-        $hosts = $this->getBlocks();
+        $hosts = $this->getDenied();
 
         $hosts->shouldBeArray();
         $hosts->shouldHaveCount(2);
-        $hosts->shouldContainHost(Host::fromString('123.0.0.1'));
-    }
-
-    public function getMatchers()
-    {
-        return [
-            'containHost' => function ($array, $host) {
-                foreach ($array as $item) {
-                    if ($item->equals($host)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        ];
+        $hosts->shouldContain('123.0.0.1');
     }
 }

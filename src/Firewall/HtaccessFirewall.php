@@ -5,6 +5,7 @@ namespace HtaccessFirewall\Firewall;
 use HtaccessFirewall\Filesystem\Filesystem;
 use HtaccessFirewall\Filesystem\BuiltInFilesystem;
 use HtaccessFirewall\Filesystem\Exception\FileException;
+use HtaccessFirewall\Host\Host;
 
 /**
  * Firewall using Htaccess files.
@@ -40,37 +41,37 @@ class HtaccessFirewall implements Firewall
     }
 
     /**
-     * Block host.
+     * Deny host.
      *
      * @param Host $host
      */
-    public function block(Host $host)
+    public function deny(Host $host)
     {
         $this->addLine('deny from ' . $host->toString());
     }
 
     /**
-     * Unblock host.
+     * Undeny host.
      *
      * @param Host $host
      */
-    public function unblock(Host $host)
+    public function undeny(Host $host)
     {
         $this->removeLine('deny from ' . $host->toString());
     }
 
     /**
-     * Get all blocked hosts.
+     * Get all denied hosts.
      *
-     * @return array
+     * @return string[]
      */
-    public function getBlocks()
+    public function getDenied()
     {
         $lines = $this->readLinesWithPrefix('deny from ');
 
         foreach ($lines as $key => $line) {
             $host = substr($line, 10);
-            $lines[$key] = Host::fromString($host);
+            $lines[$key] = $host;
         }
 
         return $lines;
@@ -115,9 +116,9 @@ class HtaccessFirewall implements Firewall
     /**
      * Get array of prefixed lines in section.
      *
-     * @param string|array $prefixes
+     * @param string|string[] $prefixes
      *
-     * @return array
+     * @return string[]
      */
     private function readLinesWithPrefix($prefixes)
     {
@@ -142,7 +143,7 @@ class HtaccessFirewall implements Firewall
     /**
      * Get array of all lines in section.
      *
-     * @return array
+     * @return string[]
      */
     private function readLines()
     {

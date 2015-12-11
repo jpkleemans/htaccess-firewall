@@ -2,26 +2,28 @@
 
 namespace HtaccessFirewall\Firewall;
 
+use HtaccessFirewall\Host\Host;
+
 interface Firewall
 {
     /**
-     * Block host.
+     * Deny host.
      *
      * @param Host $host
      */
-    public function block(Host $host);
+    public function deny(Host $host);
 
     /**
-     * Unblock host.
+     * Undeny host.
      *
      * @param Host $host
      */
-    public function unblock(Host $host);
+    public function undeny(Host $host);
 
     /**
-     * Get all blocked hosts.
+     * Get all denied hosts.
      *
-     * @return array
+     * @return string[]
      */
-    public function getBlocks();
+    public function getDenied();
 }

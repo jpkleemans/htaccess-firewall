@@ -34,7 +34,7 @@ class BuiltInFilesystem implements Filesystem
      * @throws FileNotFoundException
      * @throws FileNotReadableException
      *
-     * @return array
+     * @return string[]
      */
     public function read($file)
     {
@@ -57,7 +57,7 @@ class BuiltInFilesystem implements Filesystem
      * @throws FileNotFoundException
      * @throws FileNotWritableException
      *
-     * @param array $lines Array of lines to write to the file.
+     * @param string[] $lines Array of lines to write to the file.
      */
     public function write($file, $lines)
     {
