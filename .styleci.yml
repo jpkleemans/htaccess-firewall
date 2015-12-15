@@ -1,0 +1,13 @@
+preset: recommended
+
+enabled:
+  - long_array_syntax
+  - concat_with_spaces
+
+disabled:
+  - short_array_syntax
+  - concat_without_spaces
+  - visibility
+  - ordered_use
+  - unused_use
+  - phpdoc_align
