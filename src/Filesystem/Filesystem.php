@@ -24,11 +24,10 @@ interface Filesystem
      * Write an array to a file.
      *
      * @param string $file Path to the file.
+     * @param string[] $lines Array of lines to write to the file.
      *
      * @throws FileNotFoundException
      * @throws FileNotWritableException
-     *
-     * @param string[] $lines Array of lines to write to the file.
      */
     public function write($file, $lines);
 

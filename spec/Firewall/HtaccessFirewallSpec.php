@@ -18,7 +18,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
                 'deny from 123.0.0.1',
                 'deny from 123.0.0.2',
                 'allow from all',
-                '# END Firewall'
+                '# END Firewall',
             ));
 
         $this->beConstructedWith('path/to/.htaccess', $fileSystem);
@@ -39,7 +39,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             'deny from 123.0.0.2',
             'deny from 123.0.0.3',
             'allow from all',
-            '# END Firewall'
+            '# END Firewall',
         ))->shouldBeCalled();
 
         $this->deny(IP::fromString('123.0.0.3'));
@@ -53,7 +53,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             'deny from 123.0.0.1',
             'deny from 123.0.0.2',
             'allow from all',
-            '# END Firewall'
+            '# END Firewall',
         ))->shouldBeCalled();
 
         $this->deny(IP::fromString('123.0.0.1'));
@@ -68,7 +68,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             'order allow,deny',
             'deny from 123.0.0.1',
             'allow from all',
-            '# END Firewall'
+            '# END Firewall',
         ))->shouldBeCalled();
 
         $this->deny(IP::fromString('123.0.0.1'));
@@ -97,7 +97,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             'order allow,deny',
             'deny from 123.0.0.2',
             'allow from all',
-            '# END Firewall'
+            '# END Firewall',
         ))->shouldBeCalled();
 
         $this->undeny(IP::fromString('123.0.0.1'));
