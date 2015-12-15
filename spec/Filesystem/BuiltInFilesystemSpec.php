@@ -12,7 +12,7 @@ class BuiltInFilesystemSpec extends ObjectBehavior
     function let()
     {
         vfsStream::setup('root', null, array(
-            'dummyfile.txt' => 'Lorem ipsum' . PHP_EOL . 'Dolor sit amet' . PHP_EOL . 'consectetur adipiscing elit'
+            'dummyfile.txt' => 'Lorem ipsum' . PHP_EOL . 'Dolor sit amet' . PHP_EOL . 'consectetur adipiscing elit',
         ));
 
         // Disable write lock because LOCK_EX does not work with vfsStream
@@ -61,7 +61,7 @@ class BuiltInFilesystemSpec extends ObjectBehavior
 
         $this->write($file, array(
             'Integer consequat',
-            'accumsan orci'
+            'accumsan orci',
         ));
 
         $result = $this->read($file);

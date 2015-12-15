@@ -39,11 +39,11 @@ class BuiltInFilesystem implements Filesystem
     public function read($file)
     {
         if (!$this->exists($file)) {
-            throw new FileNotFoundException;
+            throw new FileNotFoundException();
         }
 
         if (!$this->readable($file)) {
-            throw new FileNotReadableException;
+            throw new FileNotReadableException();
         }
 
         return file($file, FILE_IGNORE_NEW_LINES);
@@ -53,20 +53,19 @@ class BuiltInFilesystem implements Filesystem
      * Write an array to a file.
      *
      * @param string $file Path to the file.
+     * @param string[] $lines Array of lines to write to the file.
      *
      * @throws FileNotFoundException
      * @throws FileNotWritableException
-     *
-     * @param string[] $lines Array of lines to write to the file.
      */
     public function write($file, $lines)
     {
         if (!$this->exists($file)) {
-            throw new FileNotFoundException;
+            throw new FileNotFoundException();
         }
 
         if (!$this->writable($file)) {
-            throw new FileNotWritableException;
+            throw new FileNotWritableException();
         }
 
         $contents = implode(PHP_EOL, $lines);
