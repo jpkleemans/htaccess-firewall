@@ -4,6 +4,8 @@
 [![Code Quality](https://img.shields.io/scrutinizer/g/jpkleemans/htaccess-firewall.svg)](https://scrutinizer-ci.com/g/jpkleemans/htaccess-firewall/)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/01ac1272-ec69-43ab-b918-bbed9898e073/big.png)](https://insight.sensiolabs.com/projects/01ac1272-ec69-43ab-b918-bbed9898e073)
+
 Simple access control using Htaccess.
 
 > This library is currently under development. Things will change!
