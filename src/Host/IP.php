@@ -20,7 +20,7 @@ class IP implements Host
      */
     private function __construct($value)
     {
-        if (filter_var($value, FILTER_VALIDATE_IP) === false) {
+        if (!self::isValid($value)) {
             throw new InvalidArgumentException('The first parameter of IP must be a valid IP address.');
         }
 
@@ -47,6 +47,18 @@ class IP implements Host
     public static function fromCurrentRequest()
     {
         return new self($_SERVER['REMOTE_ADDR']);
+    }
+
+    /**
+     * Check if string is a valid IP.
+     *
+     * @param string $value
+     *
+     * @return bool
+     */
+    public static function isValid($value)
+    {
+        return filter_var($value, FILTER_VALIDATE_IP) !== false;
     }
 
     /**

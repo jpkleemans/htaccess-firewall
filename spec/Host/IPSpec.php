@@ -17,6 +17,7 @@ class IPSpec extends ObjectBehavior
 
     function it_is_initializable_from_the_current_request()
     {
+        $_SERVER = array('REMOTE_ADDR' => '123.0.0.1');
         $this->beConstructedThrough('fromCurrentRequest', array());
         $this->shouldNotThrow('HtaccessFirewall\Host\Exception\InvalidArgumentException')->duringInstantiation();
     }
@@ -31,6 +32,18 @@ class IPSpec extends ObjectBehavior
     {
         $this->beConstructedThrough('fromString', array('3ffe:6a88:85a3:08d3:1319:8a2e:0370:7344'));
         $this->shouldNotThrow('HtaccessFirewall\Host\Exception\InvalidArgumentException')->duringInstantiation();
+    }
+
+    function it_validates_ip_addresses()
+    {
+        $this->beConstructedThrough('fromString', array('123.0.0.1'));
+
+        $this::isValid('123.0.0.1')->shouldBe(true);
+        $this::isValid('3ffe:6a88:85a3:08d3:1319:8a2e:0370:7344')->shouldBe(true);
+
+        $this::isValid('123..0.0.1')->shouldBe(false);
+        $this::isValid('1200::AB00:1234::2552:7777:1313')->shouldBe(false);
+        $this::isValid('not-an-ip.com')->shouldBe(false);
     }
 
     function it_should_not_allow_invalid_ip_addresses()
