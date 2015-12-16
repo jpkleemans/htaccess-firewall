@@ -20,7 +20,7 @@ $ composer require jpkleemans/htaccess-firewall:dev-master
 
 ## Usage
 
-First, create an instance of the `HtaccessFirewall` class:
+First, create an instance of the `HtaccessFirewall\Firewall\HtaccessFirewall` class:
 
 ``` php
 $firewall = new HtaccessFirewall('path/to/.htaccess');
@@ -50,7 +50,20 @@ $host = IP::fromCurrentRequest();
 $firewall->deny($host);
 ```
 
-> More coming soon...
+### Get all denied hosts
+
+``` php
+$hosts = $firewall->getDenied();
+```
+
+### Use other filesystem
+
+You can use another filesystem by passing it as the second argument of the `HtaccessFirewall` constructor. The filesystem must implement the `HtaccessFirewall\Filesystem\Filesystem` interface.
+
+``` php
+$filesystem = new YourCustomFilesystem();
+$firewall = new HtaccessFirewall('path/to/.htaccess', $filesystem);
+```
 
 ## Testing
 
