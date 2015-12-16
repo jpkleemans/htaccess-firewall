@@ -167,9 +167,9 @@ class HtaccessFirewall implements Firewall
     }
 
     /**
-     * Get array of lines to section.
+     * Write array of lines to section.
      *
-     * @param $lines
+     * @param string[] $lines
      *
      * @throws FileException
      */
