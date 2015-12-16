@@ -52,13 +52,13 @@ class IP implements Host
     /**
      * Compare equality with another Host.
      *
-     * @param Host $host
+     * @param Host $other
      *
      * @return bool
      */
-    public function equals(Host $host)
+    public function equals(Host $other)
     {
-        return $host->toString() === $this->value;
+        return $this->toString() === $other->toString();
     }
 
     /**
