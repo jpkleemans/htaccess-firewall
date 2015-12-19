@@ -75,7 +75,7 @@ class IP implements Host
         if ($isIPv4 !== false) {
             return self::IPV4;
         }
-        
+
         return self::IPV6;
     }
 
