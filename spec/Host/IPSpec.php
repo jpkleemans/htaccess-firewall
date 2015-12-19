@@ -15,13 +15,6 @@ class IPSpec extends ObjectBehavior
         $this->shouldNotThrow('HtaccessFirewall\Host\Exception\InvalidArgumentException')->duringInstantiation();
     }
 
-    function it_is_initializable_from_the_current_request()
-    {
-        $_SERVER = array('REMOTE_ADDR' => '123.0.0.1');
-        $this->beConstructedThrough('fromCurrentRequest', array());
-        $this->shouldNotThrow('HtaccessFirewall\Host\Exception\InvalidArgumentException')->duringInstantiation();
-    }
-
     function it_should_allow_ipv4_addresses()
     {
         $this->beConstructedThrough('fromString', array('123.0.0.1'));

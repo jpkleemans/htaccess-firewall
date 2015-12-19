@@ -43,22 +43,6 @@ class IP implements Host
     }
 
     /**
-     * Create IP from current request.
-     *
-     * @return IP
-     */
-    public static function fromCurrentRequest($useProxy = false)
-    {
-        if ($useProxy) {
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
-        }
-
-        return new self($ip);
-    }
-
-    /**
      * Check if string is a valid IP.
      *
      * @param string $value
