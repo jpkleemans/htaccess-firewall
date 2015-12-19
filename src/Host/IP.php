@@ -47,9 +47,15 @@ class IP implements Host
      *
      * @return IP
      */
-    public static function fromCurrentRequest()
+    public static function fromCurrentRequest($useProxy = false)
     {
-        return new self($_SERVER['REMOTE_ADDR']);
+        if ($useProxy) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return new self($ip);
     }
 
     /**
