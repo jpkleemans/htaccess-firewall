@@ -46,6 +46,18 @@ class IPSpec extends ObjectBehavior
         $this::validate('not-an-ip.com')->shouldBe(false);
     }
 
+    function it_gets_the_version_of_ipv4_addresses()
+    {
+        $this->beConstructedThrough('fromString', array('123.0.0.1'));
+        $this->getVersion()->shouldBe('IPv4');
+    }
+
+    function it_gets_the_version_of_ipv6_addresses()
+    {
+        $this->beConstructedThrough('fromString', array('3ffe:6a88:85a3:08d3:1319:8a2e:0370:7344'));
+        $this->getVersion()->shouldBe('IPv6');
+    }
+
     function it_should_not_allow_invalid_ip_addresses()
     {
         $this->beConstructedThrough('fromString', array('123..0.0.1'));

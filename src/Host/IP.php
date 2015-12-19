@@ -6,6 +6,9 @@ use HtaccessFirewall\Host\Exception\InvalidArgumentException;
 
 class IP implements Host
 {
+    const IPV4 = 'IPv4';
+    const IPV6 = 'IPv6';
+
     /**
      * @var string
      */
@@ -59,6 +62,20 @@ class IP implements Host
     public static function validate($value)
     {
         return filter_var($value, FILTER_VALIDATE_IP) !== false;
+    }
+
+    /**
+     * Get the version (IPv4 or IPv6) of the IP.
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        $isIPv4 = filter_var($this->toString(), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+        if ($isIPv4 !== false) {
+            return self::IPV4;
+        }
+        return self::IPV6;
     }
 
     /**
