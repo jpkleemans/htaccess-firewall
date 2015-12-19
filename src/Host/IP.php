@@ -20,7 +20,7 @@ class IP implements Host
      */
     private function __construct($value)
     {
-        if (!self::isValid($value)) {
+        if (!self::validate($value)) {
             throw new InvalidArgumentException('The first parameter of IP must be a valid IP address.');
         }
 
@@ -56,7 +56,7 @@ class IP implements Host
      *
      * @return bool
      */
-    public static function isValid($value)
+    public static function validate($value)
     {
         return filter_var($value, FILTER_VALIDATE_IP) !== false;
     }
