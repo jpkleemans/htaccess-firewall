@@ -42,14 +42,6 @@ $host = IP::fromString('123.0.0.1');
 $firewall->undeny($host);
 ```
 
-### Block current visitor
-
-``` php
-$host = IP::fromCurrentRequest();
-
-$firewall->deny($host);
-```
-
 ### Get all denied hosts
 
 ``` php
