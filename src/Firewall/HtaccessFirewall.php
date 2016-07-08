@@ -82,7 +82,7 @@ class HtaccessFirewall implements Firewall
      */
     public function deactivate()
     {
-        $lines = $this->readLinesWithPrefix('deny from ');
+        $lines = $this->readLinesWithPrefix(['ErrorDocument 403 ', 'deny from ']);
 
         $insertion = array();
         foreach ($lines as $line) {
@@ -97,7 +97,7 @@ class HtaccessFirewall implements Firewall
      */
     public function reactivate()
     {
-        $lines = $this->readLinesWithPrefix('#deny from ');
+        $lines = $this->readLinesWithPrefix(['#ErrorDocument 403 ', '#deny from ']);
 
         $insertion = array();
         $insertion[] = 'order allow,deny';
@@ -110,6 +110,35 @@ class HtaccessFirewall implements Firewall
     }
 
     /**
+     * Set 403 error message.
+     *
+     * @param string $message
+     */
+    public function set403Message($message)
+    {
+        $message = trim(preg_replace('/\s+/', ' ', $message));
+
+        $line = 'ErrorDocument 403 "' . $message . '"';
+
+        $insertion = array_merge(
+            array('order allow,deny'),
+            array($line),
+            $this->readLinesWithPrefix('deny from '),
+            array('allow from all')
+        );
+
+        $this->writeLines($insertion);
+    }
+
+    /**
+     * Remove 403 error message.
+     */
+    public function remove403Message()
+    {
+        $this->removeLine('ErrorDocument 403 ');
+    }
+
+    /**
      * Add single line.
      *
      * @param string $line
@@ -118,7 +147,7 @@ class HtaccessFirewall implements Firewall
     {
         $insertion = array_merge(
             array('order allow,deny'),
-            $this->readLinesWithPrefix('deny from '),
+            $this->readLinesWithPrefix(['ErrorDocument 403 ', 'deny from ']),
             array($line),
             array('allow from all')
         );
@@ -129,18 +158,18 @@ class HtaccessFirewall implements Firewall
     /**
      * Remove single line.
      *
-     * @param string $line
+     * @param string $content
      */
-    private function removeLine($line)
+    private function removeLine($content)
     {
-        $insertion = $this->readLines();
+        $lines = $this->readLines();
 
-        $lineToRemove = array_search($line, $insertion);
-        if ($lineToRemove === false) {
-            return;
+        $insertion = array();
+        foreach ($lines as $line) {
+            if (strpos($line, $content) !== 0) {
+                $insertion[] = $line;
+            }
         }
-
-        unset($insertion[$lineToRemove]);
 
         $this->writeLines($insertion);
     }

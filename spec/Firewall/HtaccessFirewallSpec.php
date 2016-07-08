@@ -15,6 +15,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             ->willReturn(array(
                 '# BEGIN Firewall',
                 'order allow,deny',
+                'ErrorDocument 403 "You are blocked!"',
                 'deny from 123.0.0.1',
                 'deny from 123.0.0.2',
                 'allow from all',
@@ -35,6 +36,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
         $fileSystem->write('path/to/.htaccess', array(
             '# BEGIN Firewall',
             'order allow,deny',
+            'ErrorDocument 403 "You are blocked!"',
             'deny from 123.0.0.1',
             'deny from 123.0.0.2',
             'deny from 123.0.0.3',
@@ -50,6 +52,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
         $fileSystem->write('path/to/.htaccess', array(
             '# BEGIN Firewall',
             'order allow,deny',
+            'ErrorDocument 403 "You are blocked!"',
             'deny from 123.0.0.1',
             'deny from 123.0.0.2',
             'allow from all',
@@ -80,6 +83,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             ->willReturn(array(
                 '# BEGIN Firewall',
                 'order allow,deny',
+                'ErrorDocument 403 "You are blocked!"',
                 'deny from 123.0.0.1',
                 'deny from 123.0.0.2',
                 'allow from all',
@@ -95,6 +99,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
         $fileSystem->write('path/to/.htaccess', array(
             '# BEGIN Firewall',
             'order allow,deny',
+            'ErrorDocument 403 "You are blocked!"',
             'deny from 123.0.0.2',
             'allow from all',
             '# END Firewall',
@@ -116,6 +121,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
     {
         $fileSystem->write('path/to/.htaccess', array(
             '# BEGIN Firewall',
+            '#ErrorDocument 403 "You are blocked!"',
             '#deny from 123.0.0.1',
             '#deny from 123.0.0.2',
             '# END Firewall',
@@ -129,11 +135,86 @@ class HtaccessFirewallSpec extends ObjectBehavior
         $fileSystem->read('path/to/.htaccess')
             ->willReturn(array(
                 '# BEGIN Firewall',
+                '#ErrorDocument 403 "You are blocked!"',
                 '#deny from 123.0.0.1',
                 '#deny from 123.0.0.2',
                 '# END Firewall',
             ));
 
+        $fileSystem->write('path/to/.htaccess', array(
+            '# BEGIN Firewall',
+            'order allow,deny',
+            'ErrorDocument 403 "You are blocked!"',
+            'deny from 123.0.0.1',
+            'deny from 123.0.0.2',
+            'allow from all',
+            '# END Firewall',
+        ))->shouldBeCalled();
+
+        $this->reactivate();
+    }
+
+    function it_sets_the_403_message($fileSystem)
+    {
+        $fileSystem->write('path/to/.htaccess', array(
+            '# BEGIN Firewall',
+            'order allow,deny',
+            'ErrorDocument 403 "Blocked!"',
+            'deny from 123.0.0.1',
+            'deny from 123.0.0.2',
+            'allow from all',
+            '# END Firewall',
+        ))->shouldBeCalled();
+
+        $this->set403Message("Blocked!");
+    }
+
+    function it_sets_the_403_message_for_the_first_time($fileSystem)
+    {
+        $fileSystem->read('path/to/.htaccess')
+            ->willReturn(array(
+                '# BEGIN Firewall',
+                'order allow,deny',
+                'deny from 123.0.0.1',
+                'deny from 123.0.0.2',
+                'allow from all',
+                '# END Firewall',
+            ));
+
+        $fileSystem->write('path/to/.htaccess', array(
+            '# BEGIN Firewall',
+            'order allow,deny',
+            'ErrorDocument 403 "Blocked!"',
+            'deny from 123.0.0.1',
+            'deny from 123.0.0.2',
+            'allow from all',
+            '# END Firewall',
+        ))->shouldBeCalled();
+
+        $this->set403Message("Blocked!");
+    }
+
+    function it_validates_403_message($fileSystem)
+    {
+        $fileSystem->write('path/to/.htaccess', array(
+            '# BEGIN Firewall',
+            'order allow,deny',
+            'ErrorDocument 403 "multi line string"',
+            'deny from 123.0.0.1',
+            'deny from 123.0.0.2',
+            'allow from all',
+            '# END Firewall',
+        ))->shouldBeCalled();
+
+        $this->set403Message("
+            multi
+            line
+            string
+        ");
+    }
+
+    function it_removes_the_403_message($fileSystem)
+    {
         $fileSystem->write('path/to/.htaccess', array(
             '# BEGIN Firewall',
             'order allow,deny',
@@ -143,6 +224,6 @@ class HtaccessFirewallSpec extends ObjectBehavior
             '# END Firewall',
         ))->shouldBeCalled();
 
-        $this->reactivate();
+        $this->remove403Message();
     }
 }
