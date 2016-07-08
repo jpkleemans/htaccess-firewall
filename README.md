@@ -48,9 +48,34 @@ $firewall->undeny($host);
 $hosts = $firewall->getDenied();
 ```
 
-### Use other filesystem
+### Deactivate all denials
 
-You can use another filesystem by passing it as the second argument of the `HtaccessFirewall` constructor. The filesystem must implement the `HtaccessFirewall\Filesystem\Filesystem` interface.
+``` php
+$firewall->deactivate();
+```
+
+And to reactivate:
+
+``` php
+$firewall->reactivate();
+```
+
+### Set 403 message
+
+``` php
+$hosts = $firewall->set403Message('You are blocked!');
+```
+
+### Remove 403 message
+
+``` php
+$hosts = $firewall->remove403Message();
+```
+
+## Use other filesystem
+
+You can use another filesystem by passing it as the second argument of the `HtaccessFirewall` constructor.
+The filesystem must implement the `HtaccessFirewall\Filesystem\Filesystem` interface.
 
 ``` php
 $filesystem = new YourCustomFilesystem();
