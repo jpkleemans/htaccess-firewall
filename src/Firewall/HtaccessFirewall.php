@@ -82,7 +82,7 @@ class HtaccessFirewall implements Firewall
      */
     public function deactivate()
     {
-        $lines = $this->readLinesWithPrefix(['ErrorDocument 403 ', 'deny from ']);
+        $lines = $this->readLinesWithPrefix(array('ErrorDocument 403 ', 'deny from '));
 
         $insertion = array();
         foreach ($lines as $line) {
@@ -97,7 +97,7 @@ class HtaccessFirewall implements Firewall
      */
     public function reactivate()
     {
-        $lines = $this->readLinesWithPrefix(['#ErrorDocument 403 ', '#deny from ']);
+        $lines = $this->readLinesWithPrefix(array('#ErrorDocument 403 ', '#deny from '));
 
         $insertion = array();
         $insertion[] = 'order allow,deny';
@@ -147,7 +147,7 @@ class HtaccessFirewall implements Firewall
     {
         $insertion = array_merge(
             array('order allow,deny'),
-            $this->readLinesWithPrefix(['ErrorDocument 403 ', 'deny from ']),
+            $this->readLinesWithPrefix(array('ErrorDocument 403 ', 'deny from ')),
             array($line),
             array('allow from all')
         );
