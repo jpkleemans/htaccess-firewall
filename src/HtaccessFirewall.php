@@ -1,6 +1,6 @@
 <?php
 
-namespace HtaccessFirewall\Firewall;
+namespace HtaccessFirewall;
 
 use HtaccessFirewall\Filesystem\Filesystem;
 use HtaccessFirewall\Filesystem\BuiltInFilesystem;
@@ -10,7 +10,7 @@ use HtaccessFirewall\Host\Host;
 /**
  * Firewall using Htaccess files.
  */
-class HtaccessFirewall implements Firewall
+class HtaccessFirewall
 {
     /**
      * @var string

@@ -20,7 +20,7 @@ $ composer require jpkleemans/htaccess-firewall:dev-master
 
 ## Usage
 
-First, create an instance of the `HtaccessFirewall\Firewall\HtaccessFirewall` class:
+First, create an instance of the `HtaccessFirewall\HtaccessFirewall` class:
 
 ``` php
 $firewall = new HtaccessFirewall('path/to/.htaccess');

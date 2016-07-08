@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\HtaccessFirewall\Firewall;
+namespace spec\HtaccessFirewall;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -27,8 +27,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('HtaccessFirewall\Firewall\HtaccessFirewall');
-        $this->shouldImplement('HtaccessFirewall\Firewall\Firewall');
+        $this->shouldHaveType('HtaccessFirewall\HtaccessFirewall');
     }
 
     function it_blocks_a_host($fileSystem)
