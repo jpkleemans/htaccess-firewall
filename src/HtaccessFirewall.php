@@ -116,7 +116,9 @@ class HtaccessFirewall
      */
     public function set403Message($message)
     {
-        $message = trim(preg_replace('/\s+/', ' ', $message));
+        $message = preg_replace('/\s+/', ' ', $message);
+        $message = trim($message);
+        $message = str_replace('"', '', $message);
 
         $line = 'ErrorDocument 403 "' . $message . '"';
 

@@ -222,23 +222,24 @@ class HtaccessFirewallSpec extends ObjectBehavior
         $this->set403Message("Blocked!");
     }
 
-    function it_validates_403_message($fileSystem)
+    function it_sanitates_403_message($fileSystem)
     {
         $fileSystem->write('path/to/.htaccess', array(
             '# BEGIN Firewall',
             'order allow,deny',
-            'ErrorDocument 403 "multi line string"',
+            'ErrorDocument 403 "multi line quoted string"',
             'deny from 123.0.0.1',
             'deny from 123.0.0.2',
             'allow from all',
             '# END Firewall',
         ))->shouldBeCalled();
 
-        $this->set403Message("
+        $this->set403Message('
             multi
             line
+            "quoted"
             string
-        ");
+        ');
     }
 
     function it_removes_the_403_message($fileSystem)
