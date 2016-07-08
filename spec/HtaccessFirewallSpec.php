@@ -93,6 +93,35 @@ class HtaccessFirewallSpec extends ObjectBehavior
             ->during('deny', array(IP::fromString('123.0.0.1')));
     }
 
+    function it_converts_to_correct_htaccess_syntax_when_blocking($fileSystem)
+    {
+        $fileSystem->read('path/to/.htaccess')
+            ->willReturn(array(
+                '# BEGIN Firewall',
+                'ErrorDocument 403 "You are blocked!"',
+                '<FilesMatch ".*\.(php|html?|css|js|jpe?g|png|gif)$">',
+                'order deny,allow',
+                'deny from 123.0.0.1',
+                'deny from 123.0.0.2',
+                '</FilesMatch>',
+                '# END Firewall',
+            ));
+
+        $fileSystem->write('path/to/.htaccess', array(
+            '# BEGIN Firewall',
+            'order allow,deny',
+            'ErrorDocument 403 "You are blocked!"',
+            'deny from 123.0.0.1',
+            'deny from 123.0.0.2',
+            'deny from 123.0.0.3',
+            'allow from all',
+            '# END Firewall',
+        ))->shouldBeCalled();
+
+        $this->deny(IP::fromString('123.0.0.3'));
+    }
+
+
     function it_unblocks_a_host($fileSystem)
     {
         $fileSystem->write('path/to/.htaccess', array(
