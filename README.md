@@ -48,15 +48,12 @@ $firewall->undeny($host);
 $hosts = $firewall->getDenied();
 ```
 
-### Deactivate all denials
+### Deactivate firewall (comment .htaccess lines)
 
 ``` php
 $firewall->deactivate();
-```
 
-And to reactivate:
-
-``` php
+// And to reactivate:
 $firewall->reactivate();
 ```
 
@@ -64,11 +61,8 @@ $firewall->reactivate();
 
 ``` php
 $hosts = $firewall->set403Message('You are blocked!');
-```
 
-### Remove 403 message
-
-``` php
+// And to remove:
 $hosts = $firewall->remove403Message();
 ```
 
