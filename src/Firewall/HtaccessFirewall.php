@@ -78,6 +78,38 @@ class HtaccessFirewall implements Firewall
     }
 
     /**
+     * Deactivate all denials.
+     */
+    public function deactivate()
+    {
+        $lines = $this->readLinesWithPrefix('deny from ');
+
+        $insertion = array();
+        foreach ($lines as $line) {
+            $insertion[] = '#' . $line;
+        }
+
+        $this->writeLines($insertion);
+    }
+
+    /**
+     * Reactivate all deactivated denials.
+     */
+    public function reactivate()
+    {
+        $lines = $this->readLinesWithPrefix('#deny from ');
+
+        $insertion = array();
+        $insertion[] = 'order allow,deny';
+        foreach ($lines as $line) {
+            $insertion[] = substr($line, 1);
+        }
+        $insertion[] = 'allow from all';
+
+        $this->writeLines($insertion);
+    }
+
+    /**
      * Add single line.
      *
      * @param string $line

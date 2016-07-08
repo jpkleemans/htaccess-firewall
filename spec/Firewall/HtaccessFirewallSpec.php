@@ -111,4 +111,38 @@ class HtaccessFirewallSpec extends ObjectBehavior
         $hosts->shouldHaveCount(2);
         $hosts->shouldContain('123.0.0.1');
     }
+
+    function it_deactivates_all_blocks($fileSystem)
+    {
+        $fileSystem->write('path/to/.htaccess', array(
+            '# BEGIN Firewall',
+            '#deny from 123.0.0.1',
+            '#deny from 123.0.0.2',
+            '# END Firewall',
+        ))->shouldBeCalled();
+
+        $this->deactivate();
+    }
+
+    function it_reactivates_all_blocks($fileSystem)
+    {
+        $fileSystem->read('path/to/.htaccess')
+            ->willReturn(array(
+                '# BEGIN Firewall',
+                '#deny from 123.0.0.1',
+                '#deny from 123.0.0.2',
+                '# END Firewall',
+            ));
+
+        $fileSystem->write('path/to/.htaccess', array(
+            '# BEGIN Firewall',
+            'order allow,deny',
+            'deny from 123.0.0.1',
+            'deny from 123.0.0.2',
+            'allow from all',
+            '# END Firewall',
+        ))->shouldBeCalled();
+
+        $this->reactivate();
+    }
 }
