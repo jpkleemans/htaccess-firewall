@@ -118,6 +118,11 @@ class HtaccessFirewall
      */
     public function set403Message($message)
     {
+        if (empty($message)) {
+            $this->remove403Message();
+            return '';
+        }
+
         $message = preg_replace('/\s+/', ' ', $message);
         $message = trim($message);
         $message = htmlentities($message);

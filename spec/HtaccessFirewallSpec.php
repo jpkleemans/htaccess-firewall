@@ -255,6 +255,20 @@ class HtaccessFirewallSpec extends ObjectBehavior
         $this->remove403Message();
     }
 
+    function it_removes_the_403_message_if_empty($fileSystem)
+    {
+        $fileSystem->write('path/to/.htaccess', array(
+            '# BEGIN Firewall',
+            'order allow,deny',
+            'deny from 123.0.0.1',
+            'deny from 123.0.0.2',
+            'allow from all',
+            '# END Firewall',
+        ))->shouldBeCalled();
+
+        $this->set403Message('');
+    }
+
     function it_checks_whether_the_htaccess_file_exists($fileSystem)
     {
         $fileSystem->exists('path/to/.htaccess')->shouldBeCalled();
