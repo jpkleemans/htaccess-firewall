@@ -11,3 +11,4 @@ disabled:
   - ordered_use
   - unused_use
   - phpdoc_align
+  - blank_line_before_return
