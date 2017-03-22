@@ -121,7 +121,6 @@ class HtaccessFirewallSpec extends ObjectBehavior
         $this->deny(IP::fromString('123.0.0.3'));
     }
 
-
     function it_unblocks_a_host($fileSystem)
     {
         $fileSystem->write('path/to/.htaccess', array(
@@ -194,7 +193,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             '# END Firewall',
         ))->shouldBeCalled();
 
-        $this->set403Message("Blocked!");
+        $this->set403Message('Blocked!');
     }
 
     function it_sets_the_403_message_for_the_first_time($fileSystem)
@@ -219,7 +218,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             '# END Firewall',
         ))->shouldBeCalled();
 
-        $this->set403Message("Blocked!");
+        $this->set403Message('Blocked!');
     }
 
     function it_sanitates_403_message($fileSystem)
