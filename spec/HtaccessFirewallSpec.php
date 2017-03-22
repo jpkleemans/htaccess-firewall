@@ -238,7 +238,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
             line
             "quoted"
             string
-        ');
+        ')->shouldReturn('multi line &quot;quoted&quot; string');
     }
 
     function it_removes_the_403_message($fileSystem)

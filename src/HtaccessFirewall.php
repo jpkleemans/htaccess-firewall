@@ -113,6 +113,8 @@ class HtaccessFirewall
      * Set 403 error message.
      *
      * @param string $message
+     *
+     * @return string
      */
     public function set403Message($message)
     {
@@ -130,6 +132,8 @@ class HtaccessFirewall
         );
 
         $this->writeLines($insertion);
+
+        return $message;
     }
 
     /**
