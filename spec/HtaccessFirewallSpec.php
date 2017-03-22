@@ -226,7 +226,7 @@ class HtaccessFirewallSpec extends ObjectBehavior
         $fileSystem->write('path/to/.htaccess', array(
             '# BEGIN Firewall',
             'order allow,deny',
-            'ErrorDocument 403 "multi line quoted string"',
+            'ErrorDocument 403 "multi line &quot;quoted&quot; string"',
             'deny from 123.0.0.1',
             'deny from 123.0.0.2',
             'allow from all',

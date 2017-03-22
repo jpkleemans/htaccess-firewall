@@ -118,7 +118,7 @@ class HtaccessFirewall
     {
         $message = preg_replace('/\s+/', ' ', $message);
         $message = trim($message);
-        $message = str_replace('"', '', $message);
+        $message = htmlentities($message);
 
         $line = 'ErrorDocument 403 "' . $message . '"';
 
