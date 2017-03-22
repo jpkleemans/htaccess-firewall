@@ -141,6 +141,36 @@ class HtaccessFirewall
     }
 
     /**
+     * Check whether Htaccess file exists.
+     *
+     * @return bool
+     */
+    public function exists()
+    {
+        return $this->fileSystem->exists($this->path);
+    }
+
+    /**
+     * Check whether Htaccess file exists and is readable.
+     *
+     * @return bool
+     */
+    public function readable()
+    {
+        return $this->fileSystem->readable($this->path);
+    }
+
+    /**
+     * Check whether Htaccess file exists and is writable.
+     *
+     * @return bool
+     */
+    public function writable()
+    {
+        return $this->fileSystem->writable($this->path);
+    }
+
+    /**
      * Add single line.
      *
      * @param string $line

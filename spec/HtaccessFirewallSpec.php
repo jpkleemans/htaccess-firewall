@@ -254,4 +254,25 @@ class HtaccessFirewallSpec extends ObjectBehavior
 
         $this->remove403Message();
     }
+
+    function it_checks_whether_the_htaccess_file_exists($fileSystem)
+    {
+        $fileSystem->exists('path/to/.htaccess')->shouldBeCalled();
+
+        $this->exists();
+    }
+
+    function it_checks_whether_the_htaccess_file_is_readable($fileSystem)
+    {
+        $fileSystem->readable('path/to/.htaccess')->shouldBeCalled();
+
+        $this->readable();
+    }
+
+    function it_checks_whether_the_htaccess_file_is_writable($fileSystem)
+    {
+        $fileSystem->writable('path/to/.htaccess')->shouldBeCalled();
+
+        $this->writable();
+    }
 }
